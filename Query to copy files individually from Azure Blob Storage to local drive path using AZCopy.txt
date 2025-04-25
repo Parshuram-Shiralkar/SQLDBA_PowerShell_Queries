@@ -1,15 +1,13 @@
+#Query to copy files individually from Azure Blob Storage to local drive path using AZCopy
+
 $env:AZCOPY_CRED_TYPE = "Anonymous"
 $env:AZCOPY_CONCURRENCY_VALUE = "AUTO"
-# Define everything explicitly
 $accountUrl = "https://StorageAccountURL.blob.core.windows.net"
 $container = "ContainerName"
 $blobPath = "SQLPROD01/Maintenance/FULL/FileName.bak"
 $sasToken = "SASToken"
-# Final fully-qualified source URL
 $sourceUrl = "$accountUrl/$container/$blobPath`?$sasToken"
-# Local path
 $destinationPath = "D:\Backup_files\FileName.bak"
-# Run AzCopy
 & "./azcopy.exe" copy "`"$sourceUrl`"" "`"$destinationPath`"" `
     --overwrite=true `
     --from-to=BlobLocal `
@@ -17,6 +15,5 @@ $destinationPath = "D:\Backup_files\FileName.bak"
     --put-md5 `
     --disable-auto-decoding=false `
     --log-level=INFO
-# Cleanup
 $env:AZCOPY_CRED_TYPE = ""
 $env:AZCOPY_CONCURRENCY_VALUE = ""
